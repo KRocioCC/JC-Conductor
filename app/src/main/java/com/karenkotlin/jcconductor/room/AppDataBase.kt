@@ -12,7 +12,7 @@ import com.karenkotlin.jcconductor.room.entity.Conductor
     version = 1
 )
 abstract class AppDatabase : RoomDatabase() {
-    abstract fun ConductorDao(): ConductorDao
-    abstract fun AutoDao(): AutoDao
+    abstract fun conductorDao(): ConductorDao
+    abstract fun autoDao(): AutoDao
 
 }
