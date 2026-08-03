@@ -29,6 +29,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.karenkotlin.jcconductor.room.entity.Conductor
+import com.karenkotlin.jcconductor.room.navigation.AppScreens
 import com.karenkotlin.jcconductor.ui.theme.JCConductorTheme
 
 @Preview(showBackground = true, showSystemUi = true)
@@ -36,15 +37,20 @@ import com.karenkotlin.jcconductor.ui.theme.JCConductorTheme
 fun ListaConductoresPreview(){
     JCConductorTheme     {
         ListaConductoresScreen(
+            navController = rememberNavController()
         )
     }
 }
 
 @Composable
-fun ListaConductoresScreen(){
+fun ListaConductoresScreen(
+    navController: NavController
+){
     Scaffold { innerPadding ->
         ListaConductoresContent(
             modifier = Modifier.padding(innerPadding),
+            navController = navController
+
         )
     }
 }
@@ -52,6 +58,8 @@ fun ListaConductoresScreen(){
 @Composable
 fun ListaConductoresContent(
     modifier: Modifier = Modifier,
+    navController: NavController
+
 
 ){
     var conductores by remember {
@@ -67,6 +75,7 @@ fun ListaConductoresContent(
         //1
         Text(
             text = "Lista de Conductores",
+            Modifier.padding(top = 16.dp, start = 16.dp)
         )
         LazyColumn(
             modifier = Modifier
@@ -82,7 +91,8 @@ fun ListaConductoresContent(
         }
         Row(
             modifier = Modifier
-                .fillMaxWidth(),
+                .fillMaxWidth()
+                .padding(16.dp),
             horizontalArrangement = Arrangement.SpaceEvenly
         ){
             Button(
@@ -93,7 +103,11 @@ fun ListaConductoresContent(
                 )
             }
             Button(
-                onClick = {}
+                onClick = {
+                    navController.navigate(
+                        AppScreens.FormularioConductorScreen.route
+                    )
+                }
             ){
                 Text(
                     text = "Añadir"

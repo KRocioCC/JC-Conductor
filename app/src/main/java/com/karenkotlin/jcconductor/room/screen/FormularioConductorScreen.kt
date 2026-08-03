@@ -22,28 +22,37 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
+import com.karenkotlin.jcconductor.room.navigation.AppScreens
 import com.karenkotlin.jcconductor.ui.theme.JCConductorTheme
 
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun FormularioConductorPreview() {
     JCConductorTheme {
-        FormularioConductorScreen()
+        FormularioConductorScreen(
+            navController = rememberNavController()
+        )
     }
 }
 
 @Composable
-fun FormularioConductorScreen() {
+fun FormularioConductorScreen(
+    navController: NavController
+) {
     Scaffold { innerPadding ->
         FormularioConductorContent(
-            modifier = Modifier.padding(innerPadding)
+            modifier = Modifier.padding(innerPadding),
+            navController = navController
         )
     }
 }
 
 @Composable
 fun FormularioConductorContent(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    navController: NavController
 ) {
     Column(
         modifier = modifier
@@ -113,7 +122,11 @@ fun FormularioConductorContent(
                         )
                     }
                     Button(
-                        onClick = { }
+                        onClick = {
+                            navController.navigate(
+                                AppScreens.ListaConductoresScreen.route
+                            )
+                        }
                     ){
                         Text(
                             text = "Volver"
