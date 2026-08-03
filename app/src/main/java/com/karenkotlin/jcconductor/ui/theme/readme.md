@@ -41,3 +41,17 @@ implementation(libs.androidx.navigation.compose)
 # AndroidManifest.xml
 para view
 android:name=".room.RoomApp"
+
+para camara
+
+<uses-permission android:name="android.permission.CAMERA"/>
+<uses-feature
+android:name="android.hardware.camera"
+android:required="false"/>
+
+para gps
+
+<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+
+
