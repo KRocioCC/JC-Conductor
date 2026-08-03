@@ -17,6 +17,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -30,6 +31,7 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.karenkotlin.jcconductor.room.entity.Conductor
 import com.karenkotlin.jcconductor.room.navigation.AppScreens
+import com.karenkotlin.jcconductor.room.viewmodel.ConductorViewModel
 import com.karenkotlin.jcconductor.ui.theme.JCConductorTheme
 
 @Preview(showBackground = true, showSystemUi = true)
@@ -44,12 +46,14 @@ fun ListaConductoresPreview(){
 
 @Composable
 fun ListaConductoresScreen(
-    navController: NavController
+    navController: NavController,
+    viewModel: ConductorViewModel = ConductorViewModel()
 ){
     Scaffold { innerPadding ->
         ListaConductoresContent(
             modifier = Modifier.padding(innerPadding),
-            navController = navController
+            navController = navController,
+            viewModel = viewModel
 
         )
     }
@@ -58,13 +62,14 @@ fun ListaConductoresScreen(
 @Composable
 fun ListaConductoresContent(
     modifier: Modifier = Modifier,
-    navController: NavController
+    navController: NavController,
+    viewModel: ConductorViewModel
 
 
 ){
-    var conductores by remember {
-        mutableStateOf(emptyList<Conductor>())
-    }
+    val conductores by viewModel.conductores.collectAsState(
+        initial = emptyList()
+    )
 
     Column(
         modifier = modifier

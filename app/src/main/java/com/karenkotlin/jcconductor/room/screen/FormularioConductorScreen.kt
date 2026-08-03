@@ -16,6 +16,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -24,27 +25,36 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.karenkotlin.jcconductor.room.RoomApp
+import com.karenkotlin.jcconductor.room.entity.Conductor
 import com.karenkotlin.jcconductor.room.navigation.AppScreens
 import com.karenkotlin.jcconductor.ui.theme.JCConductorTheme
+import kotlinx.coroutines.launch
+import com.karenkotlin.jcconductor.room.dao.ConductorDao
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.karenkotlin.jcconductor.room.viewmodel.ConductorViewModel
 
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun FormularioConductorPreview() {
     JCConductorTheme {
         FormularioConductorScreen(
-            navController = rememberNavController()
+            navController = rememberNavController(),
+            viewModel = ConductorViewModel()
         )
     }
 }
 
 @Composable
 fun FormularioConductorScreen(
-    navController: NavController
+    navController: NavController,
+    viewModel: ConductorViewModel = viewModel()
 ) {
     Scaffold { innerPadding ->
         FormularioConductorContent(
             modifier = Modifier.padding(innerPadding),
-            navController = navController
+            navController = navController,
+            viewModel = viewModel
         )
     }
 }
@@ -52,7 +62,10 @@ fun FormularioConductorScreen(
 @Composable
 fun FormularioConductorContent(
     modifier: Modifier = Modifier,
-    navController: NavController
+    navController: NavController,
+    viewModel: ConductorViewModel
+
+
 ) {
     Column(
         modifier = modifier
@@ -62,6 +75,8 @@ fun FormularioConductorContent(
     ) {
         var nameValue by remember { mutableStateOf("") }
         var ciValue by remember { mutableStateOf("") }
+
+        val scope = rememberCoroutineScope()
         Column(
             modifier = modifier
                 .fillMaxSize()
@@ -114,12 +129,24 @@ fun FormularioConductorContent(
                         .padding(16.dp),
                     horizontalArrangement = Arrangement.End
                 ){
+                    Spacer(modifier = Modifier.padding(top = 20.dp))
                     Button(
-                        onClick = { }
+                        onClick = {
+
+                            val conductor = Conductor(
+                                nombre = nameValue,
+                                ci = ciValue
+                            )
+
+                            viewModel.addConductor(conductor)
+
+                            navController.navigate(
+                                AppScreens.ListaConductoresScreen.route
+                            )
+
+                        }
                     ){
-                        Text(
-                            text = "Registrar"
-                        )
+                        Text("Registrar")
                     }
                     Button(
                         onClick = {

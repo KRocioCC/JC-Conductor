@@ -36,3 +36,8 @@ implementation(libs.androidx.room.ktx)
 ksp(libs.androidx.room.compiler)
 
 implementation(libs.androidx.navigation.compose)
+
+
+# AndroidManifest.xml
+para view
+android:name=".room.RoomApp"
