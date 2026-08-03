@@ -26,6 +26,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.karenkotlin.jcconductor.room.entity.Conductor
 import com.karenkotlin.jcconductor.ui.theme.JCConductorTheme
 
@@ -33,7 +35,8 @@ import com.karenkotlin.jcconductor.ui.theme.JCConductorTheme
 @Composable
 fun ListaConductoresPreview(){
     JCConductorTheme     {
-        ListaConductoresScreen()
+        ListaConductoresScreen(
+        )
     }
 }
 
@@ -41,14 +44,15 @@ fun ListaConductoresPreview(){
 fun ListaConductoresScreen(){
     Scaffold { innerPadding ->
         ListaConductoresContent(
-            modifier = Modifier.padding(innerPadding)
+            modifier = Modifier.padding(innerPadding),
         )
     }
 }
 
 @Composable
 fun ListaConductoresContent(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+
 ){
     var conductores by remember {
         mutableStateOf(emptyList<Conductor>())
@@ -108,37 +112,37 @@ fun ConductorCard(
             .fillMaxWidth()
             .padding(8.dp)
     ){
+
         Column(
-            modifier = Modifier
-                .padding(16.dp)
+            modifier = Modifier.padding(16.dp)
         ){
+
             Text(
-                text = "titulo",
+                text = nombre,
                 fontWeight = FontWeight.Bold
             )
+
             Text(
-                text = "detalle"
+                text = "CI: $ci"
             )
+
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.End
             ){
+
                 Button(
-                    onClick = {
-                    }
+                    onClick = {}
                 ){
-                    Text(
-                        text = "Editar"
-                    )
+                    Text("Editar")
                 }
+
                 Button(
-                    onClick = {
-                    }
+                    onClick = {}
                 ){
-                    Text(
-                        text = "Eliminar"
-                    )
+                    Text("Eliminar")
                 }
+
             }
         }
     }
